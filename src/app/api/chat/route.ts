@@ -1,30 +1,47 @@
-import { queryRAG } from "@/lib/rag";
 import { NextRequest, NextResponse } from "next/server";
+import { queryRAG } from "@/lib/rag";
 
 export async function POST(request: NextRequest) {
   try {
-    const { message } = await request.json();
+    const body = await request.json().catch(() => null);
 
-    if (!message || message.trim() === "") {
+    if (!body || typeof body.message !== "string") {
       return NextResponse.json(
-        { error: "Mensagem vazia" },
+        { success: false, error: "Corpo inválido. Envie { message: string }" },
+        { status: 400 }
+      );
+    }
+
+    const message = body.message.trim();
+
+    if (!message) {
+      return NextResponse.json(
+        { success: false, error: "Mensagem vazia" },
         { status: 400 }
       );
     }
 
     const result = await queryRAG(message);
 
-    return NextResponse.json({
-      response: result.answer,
-      sources: result.sources,
-      success: true,
-    });
-  } catch (error: any) {
-    console.error("Erro na API:", error);
     return NextResponse.json(
       {
-        error: error.message || "Erro ao processar pergunta",
+        success: true,
+        response: result.answer,
+        sources: result.sources,
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    const message =
+      error?.message ||
+      "Erro ao processar sua pergunta";
+
+    console.error("Erro na API /api/chat:", error);
+
+    return NextResponse.json(
+      {
         success: false,
+        error: message,
       },
       { status: 500 }
     );
