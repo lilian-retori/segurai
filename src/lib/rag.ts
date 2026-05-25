@@ -7,30 +7,31 @@ type RagResult = {
   sources: string[];
 };
 
-const MODEL_NAME = "gemini-1.5-flash";
+const FALLBACK_MODELS = [
+  "gemini-2.0-flash",
+  "gemini-2.5-flash",
+  "gemini-1.5-flash",
+];
+
 const MAX_DOCS = 8;
 const MAX_CHARS_PER_DOC = 3500;
 const MAX_TOTAL_CONTEXT_CHARS = 14000;
 
 function getApiKey(): string {
   const apiKey = process.env.GOOGLE_API_KEY?.trim();
-  if (!apiKey) {
-    throw new Error("GOOGLE_API_KEY não definida no ambiente");
-  }
+  if (!apiKey) throw new Error("GOOGLE_API_KEY não definida no ambiente");
   return apiKey;
 }
 
 function getDocuments(): string[] {
   if (!Array.isArray(docsData)) return [];
-
   return (docsData as DocItem[])
     .map((d) => (typeof d?.content === "string" ? d.content.trim() : ""))
     .filter(Boolean);
 }
 
 function limitText(text: string, maxChars: number): string {
-  if (text.length <= maxChars) return text;
-  return text.slice(0, maxChars);
+  return text.length <= maxChars ? text : text.slice(0, maxChars);
 }
 
 function buildContext(documents: string[]): string {
@@ -71,6 +72,31 @@ ${question}
 RESPOSTA:`;
 }
 
+async function listAvailableModels(apiKey: string): Promise<string[]> {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Falha ao listar modelos: ${response.status} ${text}`);
+  }
+
+  const data = await response.json();
+  const models = Array.isArray(data?.models) ? data.models : [];
+
+  return models
+    .filter((m: any) =>
+      Array.isArray(m?.supportedGenerationMethods) &&
+      m.supportedGenerationMethods.includes("generateContent")
+    )
+    .map((m: any) => String(m.name || ""))
+    .filter(Boolean);
+}
+
+function normalizeModelName(name: string): string {
+  return name.replace(/^models\//, "");
+}
+
 export async function initializeRAG(): Promise<void> {
   const docs = getDocuments();
   console.log(`RAG inicializado com ${docs.length} documentos`);
@@ -90,12 +116,27 @@ export async function queryRAG(question: string): Promise<RagResult> {
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-
   const context = buildContext(documents);
   const prompt = buildPrompt(context, cleanedQuestion);
 
+  const availableModels = await listAvailableModels(apiKey);
+  console.log("Modelos disponíveis para generateContent:", availableModels);
+
+  const chosenModel =
+    availableModels
+      .map(normalizeModelName)
+      .find((m) => FALLBACK_MODELS.includes(m)) ?? "";
+
+  if (!chosenModel) {
+    throw new Error(
+      `Nenhum modelo compatível encontrado. Disponíveis: ${availableModels.join(", ")}`
+    );
+  }
+
+  console.log("Modelo escolhido:", chosenModel);
+
   try {
+    const model = genAI.getGenerativeModel({ model: chosenModel });
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text()?.trim() || "";
@@ -109,11 +150,7 @@ export async function queryRAG(question: string): Promise<RagResult> {
       sources: ["Base de Documentos SegurAI"],
     };
   } catch (error: any) {
-    const msg =
-      error?.message ||
-      error?.toString?.() ||
-      "Erro desconhecido ao chamar o Gemini";
-
+    const msg = error?.message || error?.toString?.() || "Erro desconhecido ao chamar o Gemini";
     console.error("Erro real do Gemini:", msg);
     throw new Error(`Erro ao processar sua pergunta: ${msg}`);
   }
