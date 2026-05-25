@@ -90,7 +90,7 @@ export async function queryRAG(question: string): Promise<RagResult> {
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: MODEL_NAME });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
   const context = buildContext(documents);
   const prompt = buildPrompt(context, cleanedQuestion);
