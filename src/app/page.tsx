@@ -441,7 +441,7 @@ export default function Home() {
           </div>
           <div className="w-24 h-px bg-on-primary/20 my-sm"></div>
           <p className="font-body-small text-[12px] text-on-primary/50 text-center uppercase tracking-widest">
-            © 2024 SegurAI. Tecnologia de precisão em seguros.
+            © 2026 SegurAI. Tecnologia de precisão em seguros.
           </p>
         </div>
       </footer>
