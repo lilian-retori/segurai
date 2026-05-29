@@ -90,7 +90,7 @@ export default function Home() {
             <img
               alt="SegurAI Logo"
               className="h-12 w-auto"
-              src="logo.jpeg"
+              src="/logo.jpeg"
             />
           </div>
           <nav className="hidden md:flex items-center gap-lg">
@@ -424,7 +424,7 @@ export default function Home() {
             <img
               alt="SegurAI Logo Branco"
               className="h-16 w-auto brightness-0 invert opacity-90"
-              src="logo.jpeg"
+              src="/logo.jpeg"
             />
           </div>
           <div className="flex flex-wrap gap-md justify-center font-button-text text-button-text">
