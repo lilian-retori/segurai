@@ -316,7 +316,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h2 className="font-button-text text-button-text text-primary">SegurAI Concierge</h2>
-                    <p className="text-xs text-tertiary mt-1">Serviço Ativo</p>
+                    <p className="text-sm text-tertiary mt-1">Serviço Ativo</p>
                   </div>
                 </div>
               </div>
@@ -366,7 +366,7 @@ export default function Home() {
                     <span className="material-symbols-outlined text-2xl">arrow_forward_ios</span>
                   </button>
                 </div>
-                <p className="font-body-small text-[12px] text-tertiary text-center mt-md">
+                <p className="font-body-small text-sm text-tertiary text-center mt-md">
                   Respostas embasadas exclusivamente nas condições gerais da sua apólice vigente.
                 </p>
               </div>
@@ -428,21 +428,21 @@ export default function Home() {
             />
           </div>
           <div className="flex flex-wrap gap-md justify-center font-button-text text-button-text">
-            <a className="text-on-primary/70 hover:text-on-primary transition-colors tracking-widest text-[11px]" href="#">
+            <a className="text-on-primary/70 hover:text-on-primary transition-colors tracking-widest text-sm" href="#">
               Termos e Condições
             </a>
-            <a className="text-on-primary/70 hover:text-on-primary transition-colors tracking-widest text-[11px]" href="#">
+            <a className="text-on-primary/70 hover:text-on-primary transition-colors tracking-widest text-sm" href="#">
               Política de Privacidade
             </a>
-            <a className="text-on-primary/70 hover:text-on-primary transition-colors tracking-widest text-[11px]" href="#">
+            <a className="text-on-primary/70 hover:text-on-primary transition-colors tracking-widest text-sm" href="#">
               Segurança Patrimonial de Dados
             </a>
-            <a className="text-on-primary/70 hover:text-on-primary transition-colors tracking-widest text-[11px]" href="#">
+            <a className="text-on-primary/70 hover:text-on-primary transition-colors tracking-widest text-sm" href="#">
               Compliance Susep
             </a>
           </div>
           <div className="w-24 h-px bg-on-primary/20 my-sm"></div>
-          <p className="font-body-small text-[12px] text-on-primary/50 text-center uppercase tracking-widest">
+          <p className="font-body-small text-sm text-on-primary/50 text-center uppercase tracking-widest">
             © 2026 SegurAI. Tecnologia de precisão em seguros.
           </p>
         </div>
