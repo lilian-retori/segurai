@@ -88,7 +88,7 @@ export default function Home() {
             <img
               alt="SegurAI Logo"
               className="h-12 w-auto"
-              src="https://lh3.googleusercontent.com/aida/ADBb0uil7Z6ZPJKGcZq5oJIZzE0ezKhpFwm-5-nFlkcH9oPztTqIuOINAlHTM1jfY8elvtwIYcDznfHiwXf9ycx9HaMiY4Lj7sMw8ILHdo3z-MwalimcCx80mkotSXJueeaq4ndTs4byAVj9c_42_UYgsjDGqnzNXs8EHDO6P7usr8GS3_2LJtXUX6CDTXUiUiJboNpBIhGsdG0iL2H0b0iOffGPqoznyr6ZQQYTPIL0a17X4sjcQksmblbnlU3RdBwjfuPPs47pmH_Ecw"
+              src="logo.jpeg"
             />
           </div>
           <nav className="hidden md:flex items-center gap-lg">
@@ -422,7 +422,7 @@ export default function Home() {
             <img
               alt="SegurAI Logo Branco"
               className="h-16 w-auto brightness-0 invert opacity-90"
-              src="https://lh3.googleusercontent.com/aida/ADBb0uil7Z6ZPJKGcZq5oJIZzE0ezKhpFwm-5-nFlkcH9oPztTqIuOINAlHTM1jfY8elvtwIYcDznfHiwXf9ycx9HaMiY4Lj7sMw8ILHdo3z-MwalimcCx80mkotSXJueeaq4ndTs4byAVj9c_42_UYgsjDGqnzNXs8EHDO6P7usr8GS3_2LJtXUX6CDTXUiUiJboNpBIhGsdG0iL2H0b0iOffGPqoznyr6ZQQYTPIL0a17X4sjcQksmblbnlU3RdBwjfuPPs47pmH_Ecw"
+              src="logo.jpeg"
             />
           </div>
           <div className="flex flex-wrap gap-md justify-center font-button-text text-button-text">
