@@ -27,7 +27,9 @@ export default function Home() {
   };
 
   useEffect(() => {
+  if (messages.length > 1) {
     scrollToBottom();
+   }
   }, [messages]);
 
   const handleSendMessage = async () => {
